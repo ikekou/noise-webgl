@@ -179,6 +179,9 @@ class NoiseRenderer {
         
         // Setup Page Visibility API for power saving
         this.setupVisibilityHandler();
+        
+        // Setup WebGL context loss handling
+        this.setupContextLossHandling();
     }
     
     createShader(type, source) {
@@ -197,9 +200,11 @@ class NoiseRenderer {
         this.gl.compileShader(shader);
         
         if (!this.gl.getShaderParameter(shader, this.gl.COMPILE_STATUS)) {
-            console.error('Shader compilation error:', this.gl.getShaderInfoLog(shader));
+            const error = this.gl.getShaderInfoLog(shader);
+            console.error('Shader compilation error:', error);
             this.gl.deleteShader(shader);
-            return null;
+            this.showError(`Shader compilation failed: ${error}`);
+            throw new Error(`Shader compilation failed: ${error}`);
         }
         
         return shader;
@@ -215,8 +220,10 @@ class NoiseRenderer {
         this.gl.linkProgram(this.program);
         
         if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
-            console.error('Program linking error:', this.gl.getProgramInfoLog(this.program));
-            return;
+            const error = this.gl.getProgramInfoLog(this.program);
+            console.error('Program linking error:', error);
+            this.showError(`Program linking failed: ${error}`);
+            throw new Error(`Program linking failed: ${error}`);
         }
         
         // Get uniform locations
@@ -265,6 +272,40 @@ class NoiseRenderer {
         document.addEventListener('visibilitychange', () => {
             this.isRunning = !document.hidden;
         });
+    }
+    
+    setupContextLossHandling() {
+        // Handle WebGL context loss (common on Android devices)
+        this.canvas.addEventListener('webglcontextlost', (e) => {
+            e.preventDefault();
+            console.warn('WebGL context lost');
+            this.isRunning = false;
+        });
+        
+        this.canvas.addEventListener('webglcontextrestored', () => {
+            console.log('WebGL context restored, reinitializing...');
+            this.init();
+        });
+    }
+    
+    showError(message) {
+        // Show error overlay to user instead of blank screen
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 0, 0, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: monospace;
+            max-width: 80%;
+            z-index: 1000;
+        `;
+        errorDiv.textContent = message;
+        document.body.appendChild(errorDiv);
     }
     
     resize() {
