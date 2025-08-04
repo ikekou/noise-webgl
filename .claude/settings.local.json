@@ -5,7 +5,9 @@
       "mcp__playwright__browser_navigate",
       "mcp__playwright__browser_console_messages",
       "mcp__playwright__browser_take_screenshot",
-      "Bash(open index.html)"
+      "Bash(open index.html)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": []
   }

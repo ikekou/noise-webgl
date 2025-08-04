@@ -137,6 +137,7 @@ class NoiseRenderer {
         this.startTime = Date.now();
         this.frameCount = 0;
         this.lastFpsUpdate = this.startTime;
+        this.lastFpsDisplay = this.startTime;
         
         // Hi-DPI support - cap at 2 for performance
         this.dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -274,7 +275,13 @@ class NoiseRenderer {
         
         if (delta >= 1000) {
             const fps = Math.round((this.frameCount * 1000) / delta);
-            document.getElementById('fps-value').textContent = fps;
+            
+            // Only update DOM every 200ms to avoid layout thrashing
+            if (now - this.lastFpsDisplay >= 200) {
+                document.getElementById('fps-value').textContent = fps;
+                this.lastFpsDisplay = now;
+            }
+            
             this.frameCount = 0;
             this.lastFpsUpdate = now;
         }
