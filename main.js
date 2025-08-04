@@ -141,6 +141,9 @@ class NoiseRenderer {
         // Hi-DPI support - cap at 2 for performance
         this.dpr = Math.min(window.devicePixelRatio || 1, 2);
         
+        // Animation state for power saving
+        this.isRunning = true;
+        
         // === パラメータ調整用変数 ===
         // ノイズの大きさ調整（大きいほど細かいパターン、小さいほど大きなパターン）
         this.noiseScale = 5.0;
@@ -172,6 +175,9 @@ class NoiseRenderer {
         
         // Handle canvas resize with ResizeObserver for better responsiveness
         this.setupResizeObserver();
+        
+        // Setup Page Visibility API for power saving
+        this.setupVisibilityHandler();
     }
     
     createShader(type, source) {
@@ -244,6 +250,13 @@ class NoiseRenderer {
         }
     }
     
+    setupVisibilityHandler() {
+        // Use Page Visibility API to pause animation when tab is hidden
+        document.addEventListener('visibilitychange', () => {
+            this.isRunning = !document.hidden;
+        });
+    }
+    
     resize() {
         const width = this.canvas.clientWidth;
         const height = this.canvas.clientHeight;
@@ -283,8 +296,10 @@ class NoiseRenderer {
     }
     
     animate() {
-        this.render();
-        this.updateFPS();
+        if (this.isRunning) {
+            this.render();
+            this.updateFPS();
+        }
         requestAnimationFrame(() => this.animate());
     }
 }
