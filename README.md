@@ -9,6 +9,11 @@ GPU-accelerated 3D Simplex Noise visualization with real-time animation. Feature
 
 *Smooth 3D Simplex Noise animation running at 60 FPS*
 
+## 🌐 Live Demos
+
+- **Vanilla WebGL**: [https://ikekou.github.io/noise-webgl/samples/vanilla/](https://ikekou.github.io/noise-webgl/samples/vanilla/)
+- **Pixi.js Filter**: [https://ikekou.github.io/noise-webgl/samples/pixi/](https://ikekou.github.io/noise-webgl/samples/pixi/)
+
 ## 🎯 Which Implementation Should You Choose?
 
 | Use Case | Vanilla (samples/vanilla) | Pixi.js Filter (samples/pixi) |

@@ -9,6 +9,11 @@ GPU加速による3D Simplex Noiseのリアルタイム可視化。用途に応�
 
 *60FPSで動作する滑らかな3D Simplex Noiseアニメーション*
 
+## 🌐 ライブデモ
+
+- **Vanilla WebGL**: [https://ikekou.github.io/noise-webgl/samples/vanilla/](https://ikekou.github.io/noise-webgl/samples/vanilla/)
+- **Pixi.jsフィルター**: [https://ikekou.github.io/noise-webgl/samples/pixi/](https://ikekou.github.io/noise-webgl/samples/pixi/)
+
 ## 🎯 どちらの実装を選ぶべきか？
 
 | 用途 | Vanilla (samples/vanilla) | Pixi.js Filter (samples/pixi) |
