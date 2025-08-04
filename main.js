@@ -229,7 +229,11 @@ class NoiseRenderer {
     }
     
     setupWebGL() {
-        // Disable unnecessary features
+        // Create and bind VAO for clean state management
+        this.vao = this.gl.createVertexArray();
+        this.gl.bindVertexArray(this.vao);
+        
+        // Disable unnecessary features for fullscreen pass
         this.gl.disable(this.gl.DEPTH_TEST);
         this.gl.disable(this.gl.BLEND);
         this.gl.disable(this.gl.CULL_FACE);
