@@ -240,6 +240,11 @@ class NoiseRenderer {
         
         // Clear color
         this.gl.clearColor(0, 0, 0, 1);
+        
+        // Set static uniforms once
+        this.gl.useProgram(this.program);
+        this.gl.uniform1f(this.uniforms.uNoiseScale, this.noiseScale);
+        this.gl.uniform1f(this.uniforms.uAnimationSpeed, this.animationSpeed);
     }
     
     setupResizeObserver() {
@@ -293,14 +298,11 @@ class NoiseRenderer {
     
     render() {
         this.gl.clear(this.gl.COLOR_BUFFER_BIT);
-        this.gl.useProgram(this.program);
         
-        // Update uniforms
+        // Update only dynamic uniforms each frame
         const time = (Date.now() - this.startTime) / 1000.0;
         this.gl.uniform1f(this.uniforms.uTime, time);
         this.gl.uniform2f(this.uniforms.uResolution, this.canvas.width, this.canvas.height);
-        this.gl.uniform1f(this.uniforms.uNoiseScale, this.noiseScale);
-        this.gl.uniform1f(this.uniforms.uAnimationSpeed, this.animationSpeed);
         
         // Draw fullscreen triangle
         this.gl.drawArrays(this.gl.TRIANGLES, 0, 3);
