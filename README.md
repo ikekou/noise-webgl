@@ -2,6 +2,10 @@
 
 WebGLを使用した3D Simplex Noiseのリアルタイムビジュアライゼーション。Z座標を時間で変化させることで、ノイズパターンが滑らかに変化するアニメーションを実現しています。
 
+![3D Simplex Noise WebGL Demo](screenshot.png)
+
+*60FPSで動作する滑らかな3D Simplex Noiseアニメーション*
+
 ## 特徴
 
 - **高性能**: WebGL2を使用した GPU アクセラレーション
@@ -33,11 +37,15 @@ WebGLを使用した3D Simplex Noiseのリアルタイムビジュアライゼ�
 
 - `index.html` - 基本的なHTML構造
 - `style.css` - フルスクリーンキャンバスのスタイル
-- `main.js` - WebGLセットアップとアニメーション制御
+- `main.js` - アプリケーションエントリーポイント
+- `noise-renderer.js` - NoiseRendererクラス（メインロジック）
+- `gl-utils.js` - WebGLユーティリティ関数
+- `shaders.js` - シェーダーソースコード
+- `screenshot.png` - デモ画像
 
 ## カスタマイズ
 
-`main.js`内の以下のパラメータを調整できます：
+`noise-renderer.js`内の以下のパラメータを調整できます：
 
 ```javascript
 // ノイズのスケール（大きいほど細かいパターン）
