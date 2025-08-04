@@ -1,0 +1,68 @@
+# 3D Simplex Noise WebGL Visualization
+
+🇯🇵 日本語 | [🇺🇸 English](README.md)
+
+WebGLを使用した3D Simplex Noiseのリアルタイムビジュアライゼーション。Z座標を時間で変化させることで、ノイズパターンが滑らかに変化するアニメーションを実現しています。
+
+![3D Simplex Noise WebGL Demo](screenshot.png)
+
+*60FPSで動作する滑らかな3D Simplex Noiseアニメーション*
+
+## 特徴
+
+- **高性能**: WebGL2を使用した GPU アクセラレーション
+- **フルスクリーン表示**: ブラウザ画面全体にノイズパターンを表示
+- **リアルタイムアニメーション**: Z座標を時間で変化させて滑らかなアニメーション
+- **最適化された実装**: 分岐レスシェーダーとフルスクリーントライアングル手法
+- **FPSカウンター**: リアルタイムパフォーマンスモニタリング
+- **レスポンシブ対応**: ウィンドウサイズに自動調整
+
+## 技術詳細
+
+### Simplex Noise 3D
+- Perlin Noiseの改良版で、より高速かつ高品質なノイズ生成
+- 3次元空間（XY + 時間軸Z）でのノイズ計算により、滑らかなアニメーションを実現
+- GLSLシェーダーで完全にGPU上で計算（Ashima Artsの実装を使用）
+
+### 実装の特徴
+- **頂点バッファ不要**: `gl_VertexID`を使用した3頂点でのフルスクリーン描画
+- **分岐レス実装**: `step`/`smoothstep`関数を使用してGPU効率を最大化
+- **WebGL2専用**: WebGL2コンテキストを使用（`#version 300 es`シェーダー）
+- **クラスベース設計**: モジュラーで拡張しやすい`NoiseRenderer`クラス
+
+## 使用方法
+
+1. ブラウザで`index.html`を開くだけで動作します
+2. 画面左上にFPSが表示されます
+
+## ファイル構成
+
+- `index.html` - 基本的なHTML構造
+- `style.css` - フルスクリーンキャンバスのスタイル
+- `main.js` - アプリケーションエントリーポイント
+- `noise-renderer.js` - NoiseRendererクラス（メインロジック）
+- `gl-utils.js` - WebGLユーティリティ関数
+- `shaders.js` - シェーダーソースコード
+- `screenshot.png` - デモ画像
+
+## カスタマイズ
+
+`noise-renderer.js`内の以下のパラメータを調整できます：
+
+```javascript
+// ノイズのスケール（大きいほど細かいパターン）
+this.noiseScale = 5.0;
+
+// アニメーション速度（大きいほど早く変化）
+this.animationSpeed = 0.2;
+```
+
+## 動作環境
+
+- モダンブラウザ（Chrome, Firefox, Safari, Edge）
+- WebGL2対応必須
+
+## パフォーマンス
+
+- デスクトップ: 60 FPS（4K解像度でも可能）
+- モバイル: 30-60 FPS（デバイスにより異なる）

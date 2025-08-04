@@ -1,66 +1,68 @@
 # 3D Simplex Noise WebGL Visualization
 
-WebGLを使用した3D Simplex Noiseのリアルタイムビジュアライゼーション。Z座標を時間で変化させることで、ノイズパターンが滑らかに変化するアニメーションを実現しています。
+[🇯🇵 日本語](README.ja.md) | 🇺🇸 English
+
+A real-time 3D Simplex Noise visualization using WebGL. Creates smooth animated noise patterns by varying the Z-coordinate over time.
 
 ![3D Simplex Noise WebGL Demo](screenshot.png)
 
-*60FPSで動作する滑らかな3D Simplex Noiseアニメーション*
+*Smooth 3D Simplex Noise animation running at 60 FPS*
 
-## 特徴
+## Features
 
-- **高性能**: WebGL2を使用した GPU アクセラレーション
-- **フルスクリーン表示**: ブラウザ画面全体にノイズパターンを表示
-- **リアルタイムアニメーション**: Z座標を時間で変化させて滑らかなアニメーション
-- **最適化された実装**: 分岐レスシェーダーとフルスクリーントライアングル手法
-- **FPSカウンター**: リアルタイムパフォーマンスモニタリング
-- **レスポンシブ対応**: ウィンドウサイズに自動調整
+- **High Performance**: GPU acceleration using WebGL2
+- **Full-Screen Display**: Noise patterns rendered across the entire browser viewport
+- **Real-Time Animation**: Smooth animation by varying Z-coordinate over time
+- **Optimized Implementation**: Branch-less shaders and full-screen triangle technique
+- **FPS Counter**: Real-time performance monitoring
+- **Responsive Design**: Automatically adjusts to window size changes
 
-## 技術詳細
+## Technical Details
 
 ### Simplex Noise 3D
-- Perlin Noiseの改良版で、より高速かつ高品質なノイズ生成
-- 3次元空間（XY + 時間軸Z）でのノイズ計算により、滑らかなアニメーションを実現
-- GLSLシェーダーで完全にGPU上で計算（Ashima Artsの実装を使用）
+- Improved version of Perlin Noise with faster and higher quality noise generation
+- 3D space calculation (XY + time-based Z) enables smooth animation
+- Fully computed on GPU using GLSL shaders (Ashima Arts implementation)
 
-### 実装の特徴
-- **頂点バッファ不要**: `gl_VertexID`を使用した3頂点でのフルスクリーン描画
-- **分岐レス実装**: `step`/`smoothstep`関数を使用してGPU効率を最大化
-- **WebGL2専用**: WebGL2コンテキストを使用（`#version 300 es`シェーダー）
-- **クラスベース設計**: モジュラーで拡張しやすい`NoiseRenderer`クラス
+### Implementation Features
+- **No Vertex Buffers**: Full-screen rendering using `gl_VertexID` with 3 vertices
+- **Branch-less Implementation**: Uses `step`/`smoothstep` functions for maximum GPU efficiency
+- **WebGL2 Exclusive**: Uses WebGL2 context with `#version 300 es` shaders
+- **Class-based Design**: Modular and extensible `NoiseRenderer` class
 
-## 使用方法
+## Usage
 
-1. ブラウザで`index.html`を開くだけで動作します
-2. 画面左上にFPSが表示されます
+1. Simply open `index.html` in your browser
+2. FPS counter is displayed in the top-left corner
 
-## ファイル構成
+## File Structure
 
-- `index.html` - 基本的なHTML構造
-- `style.css` - フルスクリーンキャンバスのスタイル
-- `main.js` - アプリケーションエントリーポイント
-- `noise-renderer.js` - NoiseRendererクラス（メインロジック）
-- `gl-utils.js` - WebGLユーティリティ関数
-- `shaders.js` - シェーダーソースコード
-- `screenshot.png` - デモ画像
+- `index.html` - Basic HTML structure  
+- `style.css` - Full-screen canvas styling
+- `main.js` - Application entry point
+- `noise-renderer.js` - NoiseRenderer class (main logic)
+- `gl-utils.js` - WebGL utility functions
+- `shaders.js` - Shader source code
+- `screenshot.png` - Demo image
 
-## カスタマイズ
+## Customization
 
-`noise-renderer.js`内の以下のパラメータを調整できます：
+You can adjust the following parameters in `noise-renderer.js`:
 
 ```javascript
-// ノイズのスケール（大きいほど細かいパターン）
+// Noise scale (higher values = finer patterns)
 this.noiseScale = 5.0;
 
-// アニメーション速度（大きいほど早く変化）
+// Animation speed (higher values = faster changes)
 this.animationSpeed = 0.2;
 ```
 
-## 動作環境
+## System Requirements
 
-- モダンブラウザ（Chrome, Firefox, Safari, Edge）
-- WebGL2対応必須
+- Modern browsers (Chrome, Firefox, Safari, Edge)
+- WebGL2 support required
 
-## パフォーマンス
+## Performance
 
-- デスクトップ: 60 FPS（4K解像度でも可能）
-- モバイル: 30-60 FPS（デバイスにより異なる）
+- Desktop: 60 FPS (even at 4K resolution)
+- Mobile: 30-60 FPS (varies by device)
