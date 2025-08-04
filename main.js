@@ -170,8 +170,8 @@ class NoiseRenderer {
         // Start animation
         this.animate();
         
-        // Handle window resize
-        window.addEventListener('resize', () => this.resize());
+        // Handle canvas resize with ResizeObserver for better responsiveness
+        this.setupResizeObserver();
     }
     
     createShader(type, source) {
@@ -229,6 +229,19 @@ class NoiseRenderer {
         
         // Clear color
         this.gl.clearColor(0, 0, 0, 1);
+    }
+    
+    setupResizeObserver() {
+        // Use ResizeObserver for better resize handling
+        if (window.ResizeObserver) {
+            const resizeObserver = new ResizeObserver(() => {
+                this.resize();
+            });
+            resizeObserver.observe(this.canvas);
+        } else {
+            // Fallback to window resize event
+            window.addEventListener('resize', () => this.resize());
+        }
     }
     
     resize() {
