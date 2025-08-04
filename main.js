@@ -138,6 +138,9 @@ class NoiseRenderer {
         this.frameCount = 0;
         this.lastFpsUpdate = this.startTime;
         
+        // Hi-DPI support - cap at 2 for performance
+        this.dpr = Math.min(window.devicePixelRatio || 1, 2);
+        
         // === パラメータ調整用変数 ===
         // ノイズの大きさ調整（大きいほど細かいパターン、小さいほど大きなパターン）
         this.noiseScale = 5.0;
@@ -229,14 +232,11 @@ class NoiseRenderer {
     }
     
     resize() {
-        const dpr = window.devicePixelRatio || 1;
-        const width = window.innerWidth;
-        const height = window.innerHeight;
+        const width = this.canvas.clientWidth;
+        const height = this.canvas.clientHeight;
         
-        this.canvas.width = width * dpr;
-        this.canvas.height = height * dpr;
-        this.canvas.style.width = width + 'px';
-        this.canvas.style.height = height + 'px';
+        this.canvas.width = width * this.dpr;
+        this.canvas.height = height * this.dpr;
         
         this.gl.viewport(0, 0, this.canvas.width, this.canvas.height);
     }
